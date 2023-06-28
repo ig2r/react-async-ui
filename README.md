@@ -2,7 +2,7 @@
 
 This package provides state management primitives to build modal user interactions that you can `await`, `resolve` and `reject` using a familiar, `Promise`-based API.
 
-Its main design goal is to provide very lightweight and flexible building blocks to express modal UI *behavior* in a way that meshes well with `async`/`await` workflows, while keeping you 100% in your choice of component library and styling solution.
+Its main design goal is to provide very lightweight and flexible building blocks to express modal UI *behavior* in a way that meshes well with `async`/`await` workflows, while keeping you 100% free in your choice of component library and styling solution.
 
 ## `useAsyncModalState` hook
 
