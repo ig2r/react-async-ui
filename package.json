@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "license": "MIT",
   "author": "Stephan Deininghaus",
-  "description": "",
-  "keywords": [],
+  "description": "Asynchronous React hooks to manage modal UI state",
+  "keywords": ["async", "modal", "promise", "react", "ui"],
+  "homepage": "https://github.com/ig2r/react-async-ui",
   "type": "module",
   "exports": {
     ".": {
