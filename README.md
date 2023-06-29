@@ -2,11 +2,11 @@
 
 This package provides state management primitives to build modal user interactions that you can `await`, `resolve` and `reject` using a familiar, `Promise`-based API.
 
-Its main design goal is to provide very lightweight and flexible building blocks to express modal UI *behavior* in a way that meshes well with `async`/`await` workflows, while keeping you 100% free in your choice of component library and styling solution.
+Its main design goal is to provide very lightweight and flexible building blocks to express modal UI _behavior_ in a way that meshes well with `async`/`await` workflows, while keeping you 100% free in your choice of component library and styling solution.
 
 ## `useAsyncModalState` hook
 
-At the core of *react-async-ui* is the `useAsyncModalState` hook, which returns an array with exactly two elements:
+At the core of _react-async-ui_ is the `useAsyncModalState` hook, which returns an array with exactly two elements:
 
 ```ts
 const [state, showModal] = useAsyncModalState<TValue, TResult>()
@@ -16,11 +16,11 @@ const [state, showModal] = useAsyncModalState<TValue, TResult>()
 
 Represents the current state of the user's interation with the modal. The following properties will be available on the `state` object:
 
-* `isOpen`: indicates whether the modal is currently active
-* `props`: only set if `isOpen` is `true`, otherwise `null`
-  * `props.value`: optional input value passed to `showModal` (see below)
-  * `props.resolve(result)`: callback to complete the async interaction with a return value of `result`
-  * `props.reject(reason)`: callback to make the async interaction fail and throw the provided `reason` object
+- `isOpen`: indicates whether the modal is currently active
+- `props`: only set if `isOpen` is `true`, otherwise `null`
+  - `props.value`: optional input value passed to `showModal` (see below)
+  - `props.resolve(result)`: callback to complete the async interaction with a return value of `result`
+  - `props.reject(reason)`: callback to make the async interaction fail and throw the provided `reason` object
 
 ### `showModal(value)`
 
