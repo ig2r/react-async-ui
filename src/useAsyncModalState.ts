@@ -1,8 +1,7 @@
 import { useCallback, useState } from 'react'
 
 /**
- * Provides invocation arguments and callbacks to resolve/reject the interaction
- * to a modal UI element.
+ * Invocation arguments and resolve/reject callbacks for a modal UI element.
  */
 export interface AsyncModalProps<TValue, TResult> {
   value: TValue
