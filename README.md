@@ -2,76 +2,81 @@
 
 This package provides state management primitives to build modal user interactions that you can `await`, `resolve` and `reject` using a familiar, `Promise`-based API.
 
-Its main design goal is to provide very lightweight and flexible building blocks to express modal UI _behavior_ in a way that meshes well with `async`/`await` workflows and is compatible with all component libraries and styling solutions.
+### Design goals
 
-## `useAsyncModalState` hook
+- Provide lightweight building blocks to express modal UI _behavior_ in a way that meshes well with `async`/`await` workflows
+- Work with all common React UI component libraries and styling solutions
+- Provide first-class TypeScript support and documentation
 
-At the core of _react-async-ui_ is the `useAsyncModalState` hook, which returns an array with exactly two elements:
+### Installation
+
+```sh
+npm install react-async-ui
+```
+
+## Usage
+
+The _react-async-ui_ package exports the `useAsyncModalState` hook to manage the lifecycle of a modal UI element that can be shown, `await`'ed, and can optionally accept parameters and return a result to the caller.
 
 ```ts
 const [state, showModal] = useAsyncModalState<TValue, TResult>()
 ```
 
-### `state`
+Similar to React's `setState` hook, it returns an array with exactly two elements:
 
-Represents the current state of the user's interation with the modal. The following properties will be available on the `state` object:
+- `state`: Indicates whether the modal is currently open. If it is open, this object also contains a `props` property that holds the parameter value (if any) and `resolve`/`reject` callbacks to complete the modal interaction &mdash; potentially returning a result to the caller &mdash; and close the modal.
+- `showModal`: A callback to open the modal and optionally pass along a parameter value. It returns a `Promise` object, so you can `await` this to obtain the result of the modal interaction when the modal component calls `state.props.resolve`/`reject`. Its full signature is:
 
-- `isOpen`: indicates whether the modal is currently active
-- `props`: only set if `isOpen` is `true`, otherwise `null`
-  - `props.value`: optional input value passed to `showModal` (see below)
-  - `props.resolve(result)`: callback to complete the async interaction with a return value of `result`
-  - `props.reject(reason)`: callback to make the async interaction fail and throw the provided `reason` object
+  ```ts
+  function showModal(value: TValue): Promise<TResult>
+  ```
 
-### `showModal(value)`
+## Example
 
-Call this to kick off the async interaction. Accepts an optional input `value` that will be available to modal UI through `state.props`.
+In this example, we'll build a simple "Hello, world" dialog that the user can dismiss using "OK" or "Cancel" buttons.
 
-Returns an awaitable `Promise` that will yield a result when `state.props.resolve` is called (typically from an UI event handler, e.g., a button click handler), or throw an error object when `state.props.reject` is called.
+First, build the dialog component. It'll take two props: `value` (whom to greet) and `resolve` (to close the dialog when the user presses a button).
 
-## Usage example
-
-Here is how you might use `useAsyncModalState` to ask the user for confirmation before deleting an item.
-
-First, declare a `YesNoPrompt` component that takes `value`, `resolve` and potentially `reject` props. You are free in your choice of UI framework to implement the dialog.
 
 ```tsx
 import { AsyncModalProps, useAsyncModalState } from 'react-async-ui'
 
-function YesNoPrompt({ value, resolve }: AsyncModalProps<string, boolean>) {
+function GreeterDialog({ value, resolve }: AsyncModalProps<string, 'ok' | 'cancel'>) {
   return (
     <dialog open>
-      <p>Message: {value}</p>
-      <button onClick={() => resolve(true)}>
-        Yes
-      </button>
-      <button onClick={() => resolve(false)}>
-        No
-      </button>
+      <p>Hello, {value}!</p>
+      <button onClick={() => resolve('ok')}> OK </button>
+      <button onClick={() => resolve('cancel')}> Cancel </button>
     </dialog>
   )
 }
 ```
 
-Then, invoke the `showModal` callback to bring up the confirmation dialog and await the returned `Promise` to suspend until the user makes their choice.
+From the main component, we need to invoke the `useAsyncModalState` hook and use the resulting `state` and `showModal` elements to:
+
+1. render our dialog when open &mdash; based on `state`
+2. show our dialog when the user clicks the trigger button &mdash; using `showModal`
 
 ```tsx
 function App() {
-  const [state, showModal] = useAsyncModalState<string, boolean>()
+  const [state, showModal] = useAsyncModalState<string, 'ok' | 'cancel'>()
 
-  const confirmDeletion = async () => {
-    const result = await showModal('You sure?')
-    if (result) {
-      // ... User clicked 'Yes' ...
+  const sayHello = async () => {
+    const result = await showModal('world')
+
+    if (result === 'ok') {
+      // TODO: Handle "ok" result
     }
   }
 
   return (
     <>
-      <button onClick={confirmDeletion} disabled={state.isOpen}>
-        Delete
+      <button onClick={sayHello} disabled={state.isOpen}>
+        Say hello!
       </button>
 
-      {state.isOpen && <YesNoPrompt {...state.props} />}
+      {/* Conditionally show the dialog, passing in data from showModal */}
+      {state.isOpen && <GreeterDialog {...state.props} />}
     </>
   )
 }
