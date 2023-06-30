@@ -75,7 +75,7 @@ function App() {
         Say hello!
       </button>
 
-      {/* Conditionally show the dialog and pass in data from showModal */}
+      {/* Conditionally show the dialog, passing in data from showModal */}
       {state.isOpen && <GreeterDialog {...state.props} />}
     </>
   )
