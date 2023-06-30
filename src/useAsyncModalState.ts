@@ -1,23 +1,5 @@
 import { useCallback, useState } from 'react'
-
-/**
- * Provides invocation arguments and callbacks to resolve/reject the interaction
- * to a modal UI element.
- */
-export interface AsyncModalProps<TValue, TResult> {
-  value: TValue
-  resolve: (result: TResult | PromiseLike<TResult>) => void
-  reject: (reason?: any) => void
-}
-
-/**
- * Interaction state for a modal UI element as managed by `useAsyncModalState`.
- * Indicates whether the modal is currently open and contains invocation arguments
- * and callbacks to resolve/reject the interaction.
- */
-export type AsyncModalState<TValue, TResult> =
-  | { isOpen: true; props: AsyncModalProps<TValue, TResult> }
-  | { isOpen: false; props: null }
+import { type AsyncModalState } from './AsyncModalState'
 
 /**
  * Manages the state of a modal UI element that can be invoked asynchronously

@@ -2,7 +2,7 @@
 
 This package provides state management primitives to build modal user interactions that you can `await`, `resolve` and `reject` using a familiar, `Promise`-based API.
 
-Its main design goal is to provide very lightweight and flexible building blocks to express modal UI _behavior_ in a way that meshes well with `async`/`await` workflows, while keeping you 100% free in your choice of component library and styling solution.
+Its main design goal is to provide very lightweight and flexible building blocks to express modal UI _behavior_ in a way that meshes well with `async`/`await` workflows and is compatible with all component libraries and styling solutions.
 
 ## `useAsyncModalState` hook
 
@@ -76,14 +76,3 @@ function App() {
   )
 }
 ```
-
-## `useAsyncModal` hook
-
-In addition to `useAsyncModalState`, this package provides a convenience `useAsyncModal` hook that wraps `useAsyncModalState` and accepts a render function that will be called to render modal UI when `showModal` is called:
-
-```tsx
-const [modal, showModal] = useAsyncModal<TValue, TResult>(
-  props => <YesNoPrompt {...props} />)
-```
-
-The returned `modal` element will be a `React.ReactNode` instance that is `null` when the modal is closed, and the result of the given render function when the modal is open.
