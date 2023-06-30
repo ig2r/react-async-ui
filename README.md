@@ -33,7 +33,7 @@ Similar to React's `setState` hook, it returns an array with exactly two element
 
 ## Example
 
-In this example, we'll build a simple "Hello, world" dialog that the user can dismiss using either one of "OK" or "Cancel" buttons.
+In this example, we'll build a simple "Hello, world" dialog that the user can dismiss using "OK" or "Cancel" buttons.
 
 First, build the dialog component. It'll take two props: `value` (whom to greet) and `resolve` (to close the dialog when the user presses a button).
 
@@ -52,7 +52,7 @@ function GreeterDialog({ value, resolve }: AsyncModalProps<string, 'ok' | 'cance
 }
 ```
 
-Then in the main component, we need to invoke the `useAsyncModalState` hook and use the resulting `state` and `showModal` elements to:
+From the main component, we need to invoke the `useAsyncModalState` hook and use the resulting `state` and `showModal` elements to:
 
 1. render our dialog when open &mdash; based on `state`
 2. show our dialog when the user clicks the trigger button &mdash; using `showModal`
@@ -75,6 +75,7 @@ function App() {
         Say hello!
       </button>
 
+      {/* Conditionally show the dialog and pass in data from showModal */}
       {state.isOpen && <GreeterDialog {...state.props} />}
     </>
   )
