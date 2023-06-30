@@ -6,7 +6,7 @@ This package provides state management primitives to build modal user interactio
 
 - Provide lightweight building blocks to express modal UI _behavior_ in a way that meshes well with `async`/`await` workflows
 - Work with all common React UI component libraries and styling solutions
-- Provide TypeScript support
+- Provide first-class TypeScript support and documentation
 
 ### Installation
 
