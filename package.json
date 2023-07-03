@@ -34,13 +34,15 @@
   ],
   "scripts": {
     "build": "tsc --build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
   },
   "devDependencies": {
     "@changesets/cli": "^2.26.2",
     "@types/react": "^18.2.14",
     "dprint": "^0.38.3",
-    "typescript": "^5.1.5"
+    "typescript": "^5.1.5",
+    "vitest": "^0.32.4"
   },
   "peerDependencies": {
     "react": "^17 || ^18"
