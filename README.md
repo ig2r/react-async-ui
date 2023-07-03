@@ -39,7 +39,6 @@ In this example, we'll build a simple "Hello, world" dialog that the user can di
 
 First, build the dialog component. It'll take two props: `value` (whom to greet) and `resolve` (to close the dialog when the user presses a button).
 
-
 ```tsx
 import { AsyncModalProps, useAsyncModalState } from 'react-async-ui'
 
