@@ -4,6 +4,7 @@
   "license": "MIT",
   "author": "Stephan Deininghaus",
   "description": "Asynchronous React hooks to manage modal UI state",
+  "homepage": "https://github.com/ig2r/react-async-ui",
   "keywords": [
     "async",
     "modal",
@@ -11,7 +12,6 @@
     "react",
     "ui"
   ],
-  "homepage": "https://github.com/ig2r/react-async-ui",
   "type": "module",
   "exports": {
     ".": {
@@ -28,6 +28,7 @@
   },
   "main": "./dist/cjs/index.js",
   "types": "./dist/cjs/types/index.d.ts",
+  "sideEffects": false,
   "files": [
     "dist/"
   ],
