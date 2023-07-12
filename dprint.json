@@ -7,8 +7,8 @@
   },
   "markdown": {
   },
-  "includes": ["**/*.{ts,tsx,js,jsx,cjs,mjs,json,md}"],
   "excludes": [
+    "**/coverage",
     "**/dist",
     "**/node_modules",
     "**/*-lock.json"
