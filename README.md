@@ -1,6 +1,6 @@
 # react-async-ui
 
-[![Bundlephobia](https://flat.badgen.net/bundlephobia/minzip/react-async-ui)](https://bundlephobia.com/package/react-async-ui)
+[![npm](https://flat.badgen.net/npm/v/react-async-ui)](https://www.npmjs.com/package/react-async-ui) [![Bundlephobia](https://flat.badgen.net/bundlephobia/minzip/react-async-ui)](https://bundlephobia.com/package/react-async-ui)
 
 This package provides state management primitives to build modal user interactions that you can `await`, `resolve` and `reject` using a familiar, `Promise`-based API.
 
@@ -26,40 +26,23 @@ const [state, showModal] = useAsyncModalState<TValue, TResult>()
 
 Similar to React's `setState` hook, it returns an array with exactly two elements:
 
-- `state`: Indicates whether the modal is currently open. If it is open, this object also contains a `props` property that holds the parameter value (if any) and `resolve`/`reject` callbacks to complete the modal interaction &mdash; potentially returning a result to the caller &mdash; and close the modal.
-- `showModal`: A callback to open the modal and optionally pass along a parameter value. It returns a `Promise` object, so you can `await` this to obtain the result of the modal interaction when the modal component calls `state.props.resolve`/`reject`. Its full signature is:
+- `state`: Indicates whether the modal is currently open. When open, this object contains a `props` property that holds the parameter value (if any) and `resolve`/`reject` callbacks to complete the modal interaction &mdash; potentially returning a result to the caller &mdash; and close the modal.
+- `showModal`: A callback to open the modal and optionally pass along a parameter value. It returns a `Promise` object, so you can `await` it to obtain the result of the modal interaction when the modal component calls `state.props.{resolve|reject}`:
 
   ```ts
-  function showModal(value: TValue): Promise<TResult>
+  const result = await showModal(42)
   ```
 
 ## Example
 
-In this example, we'll build a simple "Hello, world" dialog that the user can dismiss using "OK" or "Cancel" buttons.
-
-First, build the dialog component. It'll take two props: `value` (whom to greet) and `resolve` (to close the dialog when the user presses a button).
+Let's build a simple greeter dialog that takes a single string argument (i.e., the name of the person to greet) and can be dismissed through "OK" and "Cancel" buttons:
 
 ```tsx
-import { AsyncModalProps, useAsyncModalState } from 'react-async-ui'
+import { useAsyncModalState } from 'react-async-ui'
 
-function GreeterDialog({ value, resolve }: AsyncModalProps<string, 'ok' | 'cancel'>) {
-  return (
-    <dialog open>
-      <p>Hello, {value}!</p>
-      <button onClick={() => resolve('ok')}> OK </button>
-      <button onClick={() => resolve('cancel')}> Cancel </button>
-    </dialog>
-  )
-}
-```
-
-From the main component, we need to invoke the `useAsyncModalState` hook and use the resulting `state` and `showModal` elements to:
-
-1. render our dialog when open &mdash; based on `state`
-2. show our dialog when the user clicks the trigger button &mdash; using `showModal`
-
-```tsx
 function App() {
+  // Declare state for a modal interaction that takes a string
+  // argument and completes with either 'ok' or 'cancel'
   const [state, showModal] = useAsyncModalState<string, 'ok' | 'cancel'>()
 
   const sayHello = async () => {
@@ -72,13 +55,29 @@ function App() {
 
   return (
     <>
-      <button onClick={sayHello} disabled={state.isOpen}>
+      <button onClick={sayHello}>
         Say hello!
       </button>
 
-      {/* Conditionally show the dialog, passing in data from showModal */}
+      {/* Only render dialog when state says it's open */}
       {state.isOpen && <GreeterDialog {...state.props} />}
     </>
+  )
+}
+```
+
+The corresponding dialog component then uses `state.props` to access the passed value and return a result through `showModal`:
+
+```tsx
+import { AsyncModalProps } from 'react-async-ui'
+
+function GreeterDialog({ value, resolve }: AsyncModalProps<string, 'ok' | 'cancel'>) {
+  return (
+    <dialog open>
+      <p>Hello, {value}!</p>
+      <button onClick={() => resolve('ok')}> OK </button>
+      <button onClick={() => resolve('cancel')}> Cancel </button>
+    </dialog>
   )
 }
 ```
