@@ -1,6 +1,8 @@
 # react-async-ui
 
-[![npm](https://flat.badgen.net/npm/v/react-async-ui)](https://www.npmjs.com/package/react-async-ui) [![Bundlephobia](https://flat.badgen.net/bundlephobia/minzip/react-async-ui)](https://bundlephobia.com/package/react-async-ui)
+[![npm](https://img.shields.io/npm/v/react-async-ui)](https://www.npmjs.com/package/react-async-ui)
+![npm package minimized gzipped size (select exports)](https://img.shields.io/bundlejs/size/react-async-ui)
+![License](https://img.shields.io/github/license/ig2r/react-async-ui)
 
 This package provides state management primitives to build modal user interactions that you can `await`, `resolve` and `reject` using a familiar, `Promise`-based API.
 
