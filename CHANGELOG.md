@@ -1,5 +1,11 @@
 # react-async-ui
 
+## 0.2.2
+
+### Patch Changes
+
+- 2d91a36: Make README more concise and easier to understand
+
 ## 0.2.1
 
 ### Patch Changes
