@@ -8,8 +8,8 @@ This package provides state management primitives to build modal user interactio
 
 ### Design goals
 
-- Provide lightweight building blocks to express modal UI _behavior_ in a way that meshes well with `async`/`await` workflows
-- Work with all common React UI component libraries and styling solutions
+- Provide lightweight building blocks to express modal UI _behavior_ as `async`/`await` workflows
+- Provide a *headless* hooks-based API that keeps you flexible in your choice of UI component library and styling solution
 - Provide first-class TypeScript support and documentation
 
 ### Installation
@@ -18,7 +18,7 @@ This package provides state management primitives to build modal user interactio
 npm install react-async-ui
 ```
 
-## Usage
+## API
 
 The _react-async-ui_ package exports the `useAsyncModalState` hook to manage the lifecycle of a modal UI element that can be shown, `await`'ed, and can optionally accept parameters and return a result to the caller.
 
@@ -28,8 +28,17 @@ const [state, showModal] = useAsyncModalState<TValue, TResult>()
 
 Similar to React's `setState` hook, it returns an array with exactly two elements:
 
-- `state`: Indicates whether the modal is currently open. When open, this object contains a `props` property that holds the parameter value (if any) and `resolve`/`reject` callbacks to complete the modal interaction &mdash; potentially returning a result to the caller &mdash; and close the modal.
-- `showModal`: A callback to open the modal and optionally pass along a parameter value. It returns a `Promise` object, so you can `await` it to obtain the result of the modal interaction when the modal component calls `state.props.{resolve|reject}`:
+- `state`: Represents the current interaction state. This object has the following properties:
+
+  | Name | Description |
+  | ---- | ----------- |
+  | `isOpen` | `true` if the modal is open, `false` otherwise |
+  | `props` | (Only available when `isOpen` is `true`) |
+  | `props.value` | The (optional) parameter passed to `showModal()` |
+  | `props.resolve()` | Completes the modal interaction. Takes an optional `result` parameter that will be returned from `showModal()`. |
+  | `props.reject()` | Fails the modal interaction with an exception. Takes an optional `reason` parameter that will be thrown from `showModal()`. |
+
+- `showModal()`: A callback to open the modal and optionally pass along a parameter value. It returns a `Promise` object, so you can `await` it to obtain the result of the modal interaction when the modal component calls `state.props.{resolve|reject}`:
 
   ```ts
   const result = await showModal(42)
