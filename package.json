@@ -1,6 +1,6 @@
 {
   "name": "react-async-ui",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "license": "MIT",
   "author": "Stephan Deininghaus",
   "description": "Asynchronous React hooks to manage modal UI state",
@@ -39,15 +39,15 @@
   },
   "devDependencies": {
     "@changesets/cli": "^2.26.2",
-    "@testing-library/react": "^14.0.0",
+    "@testing-library/react": "^16.0.0",
     "@types/react": "^18.2.14",
-    "@vitest/coverage-v8": "^0.33.0",
-    "dprint": "^0.39.0",
-    "happy-dom": "^10.0.3",
+    "@vitest/coverage-v8": "^2.1.0",
+    "dprint": "^0.48.0",
+    "happy-dom": "^16.0.0",
     "typescript": "^5.1.5",
-    "vitest": "^0.32.4"
+    "vitest": "^2.1.0"
   },
   "peerDependencies": {
-    "react": "^17 || ^18"
+    "react": "^17 || ^18 || ^19"
   }
 }
