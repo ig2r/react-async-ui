@@ -1,5 +1,11 @@
 # react-async-ui
 
+## 0.2.3
+
+### Patch Changes
+
+- Add React 19 support, update packages
+
 ## 0.2.2
 
 ### Patch Changes
